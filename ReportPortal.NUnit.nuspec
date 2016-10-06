@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>ReportPortal NUnit v2</title>
+    <authors>Nikolay Borisenko</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://raw.githubusercontent.com/reportportal/client-net/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/reportportal/agent-net-nunit2</projectUrl>
+    <iconUrl>https://reportportal.github.io/img/rp_logo.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Report Portal NUnit agent</description>
+    <copyright>Copyright 2016</copyright>
+    <tags>reportportal testing</tags>
+  </metadata>
+  <files>
+    
+  </files>
+</package>
