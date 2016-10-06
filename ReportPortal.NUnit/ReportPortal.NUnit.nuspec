@@ -13,8 +13,22 @@
     <description>Report Portal NUnit agent</description>
     <copyright>Copyright 2016</copyright>
     <tags>reportportal testing</tags>
+
+    <dependencies>
+      <group>
+        <dependency id="ReportPortal.Shared" />
+      </group>
+    </dependencies>
+
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.Configuration" />
+    </frameworkAssemblies>
+
   </metadata>
   <files>
-    
+    <file src="lib\" target="lib" />
+    <file src="tools\" target="tools" />
+    <file src="content\" target="content" />
   </files>
+
 </package>
