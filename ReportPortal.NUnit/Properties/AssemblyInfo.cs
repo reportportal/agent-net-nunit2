@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("EPAM Systems")]
 [assembly: AssemblyProduct("ReportPortal.Nunit.Sample")]
-[assembly: AssemblyCopyright("Copyright © EPAM Systems 2013")]
+[assembly: AssemblyCopyright("Copyright © Report Portal 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
