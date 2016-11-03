@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>$id$</id>
+    <id>ReportPortal.NUnit</id>
     <version>$version$</version>
-    <title>ReportPortal NUnit v2</title>
+    <title>ReportPortal NUnit</title>
     <authors>Nikolay Borisenko</authors>
-    <owners>$author$</owners>
+    <owners>Nikolay Borisenko</owners>
     <licenseUrl>https://raw.githubusercontent.com/reportportal/client-net/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/reportportal/agent-net-nunit2</projectUrl>
     <iconUrl>https://reportportal.github.io/img/rp_logo.png</iconUrl>
@@ -16,7 +16,9 @@
 
     <dependencies>
       <group>
-        <dependency id="ReportPortal.Shared" />
+        <dependency id="ReportPortal.Shared" version="[1.1.1,)" />
+        <dependency id="NUnit.AddinsDependencies_v2-6-4" version="2.6.4" />
+        <dependency id="NUnit" version="2.6.4" />
       </group>
     </dependencies>
 
@@ -26,8 +28,10 @@
 
   </metadata>
   <files>
-    <file src="tools\" target="tools" />
-    <file src="content\" target="content" />
+    <file src="..\..\tools\" target="tools" />
+    <file src="..\..\content\" target="content" />
+     <file src="ReportPortal.NUnit.dll" target="lib" />
+
   </files>
 
 </package>

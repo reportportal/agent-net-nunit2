@@ -56,12 +56,12 @@
       <HintPath>..\packages\NUnit.AddinsDependencies_v2-6-4.2.6.4\lib\nunit.core.interfaces.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ReportPortal.Client">
-      <HintPath>..\packages\ReportPortal.Client.1.1.26\lib\net45\ReportPortal.Client.dll</HintPath>
+    <Reference Include="ReportPortal.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ReportPortal.Client.1.2.1\lib\ReportPortal.Client.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ReportPortal.Shared">
-      <HintPath>..\packages\ReportPortal.Shared.1.0.17\lib\net45\ReportPortal.Shared.dll</HintPath>
+    <Reference Include="ReportPortal.Shared, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ReportPortal.Shared.1.1.1\lib\ReportPortal.Shared.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="RestSharp">
