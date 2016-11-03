@@ -18,7 +18,7 @@ Example of config file:
     <section name="reportPortal" type="ReportPortal.NUnit.ReportPortalSection, ReportPortal.NUnit, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
   </configSections>
   <reportPortal enabled="true" logConsoleOutput="true">
-    <server url="https://rp.epam.com/reportportal-ws/api/v1/" project="default_project">
+    <server url="https://rp.epam.com/api/v1/" project="default_project">
       <authentication username="default" password="aa19555c-c9ce-42eb-bb11-87757225d535" />
       <!-- <proxy server="host:port"/> -->
     </server>
