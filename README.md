@@ -4,7 +4,7 @@
 Install **ReportPortal.NUnit** NuGet package into your project with tests.
 
 [![NuGet version](https://badge.fury.io/nu/reportportal.nunit.svg)](https://badge.fury.io/nu/reportportal.nunit)
-> PS> Install-Package ReportPortal.SpecFlow
+> PS> Install-Package ReportPortal.NUnit -Version 1.0.67
 
 Note: Only ReportPortal.NUnit v1.\* is compatible with NUnit 2.6.4. If you use NUnit 3+ please refer ReportPortal v2.\*.
 
