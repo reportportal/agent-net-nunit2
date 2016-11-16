@@ -4,7 +4,7 @@
 Install **ReportPortal.NUnit** NuGet package into your project with tests.
 
 [![NuGet version](https://badge.fury.io/nu/reportportal.nunit.svg)](https://badge.fury.io/nu/reportportal.nunit)
-> PS> Install-Package ReportPortal.NUnit -Version 1.0.67
+> PS> Install-Package ReportPortal.NUnit -Version 1.2.0
 
 Note: Only ReportPortal.NUnit v1.\* is compatible with NUnit 2.6.4. If you use NUnit 3+ please follow [ReportPortal.NUnit3](https://github.com/reportportal/agent-net-nunit) guide.
 
