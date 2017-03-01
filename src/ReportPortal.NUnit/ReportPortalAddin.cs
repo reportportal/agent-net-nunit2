@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using ReportPortal.NUnit.EventArguments;
 using ReportPortal.Client;
@@ -279,6 +280,9 @@ namespace ReportPortal.NUnit
                 {
                     Bridge.Context.LaunchReporter.Finish(requestFinishLaunch);
 
+                    Stopwatch stopwatch = Stopwatch.StartNew();
+                    Console.WriteLine("Finishing to send results to Report Portal...");
+
                     try
                     {
                         Bridge.Context.LaunchReporter.FinishTask.Wait(TimeSpan.FromMinutes(30));
@@ -289,6 +293,9 @@ namespace ReportPortal.NUnit
                         throw;
                     }
                     
+                    stopwatch.Stop();
+                    Console.WriteLine($"Results are sent to Report Portal. Sync time: {stopwatch.Elapsed}");
+
                     if (AfterRunFinished != null)
                     {
                         AfterRunFinished(this, new RunFinishedEventArgs(Bridge.Service, requestFinishLaunch, Bridge.Context.LaunchReporter));
