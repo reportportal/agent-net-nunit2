@@ -9,10 +9,12 @@ using ReportPortal.Shared;
 using NUnit.Core;
 using NUnit.Core.Extensibility;
 using System.Net;
+using System.Threading;
 
 namespace ReportPortal.NUnit
 {
-    [NUnitAddin(Type = ExtensionType.Core, Name = "EPAM Report Portal", Description = "Results synchronization with centralized system.")]
+    [NUnitAddin(Type = ExtensionType.Core, Name = "EPAM Report Portal",
+         Description = "Results synchronization with centralized system.")]
     public class ReportPortalAddin : EventListener, IAddin
     {
         public static ReportPortalAddin InstalledAddin { get; private set; }
@@ -32,7 +34,9 @@ namespace ReportPortal.NUnit
                 proxy = new WebProxy(Configuration.ReportPortal.Server.Proxy.Server);
             }
 
-            Bridge.Service = proxy == null ? new Service(uri, project, password) : new Service(uri, project, password, proxy);
+            Bridge.Service = proxy == null
+                ? new Service(uri, project, password)
+                : new Service(uri, project, password, proxy);
 
             _statusMap[ResultState.Cancelled] = Status.Skipped;
             _statusMap[ResultState.Error] = Status.Failed;
@@ -45,15 +49,17 @@ namespace ReportPortal.NUnit
         }
 
         public delegate void RunStartedHandler(object sender, RunStartedEventArgs e);
+
         public event RunStartedHandler BeforeRunStarted;
         public event RunStartedHandler AfterRunStarted;
+
         public void RunStarted(string name, int testCount)
         {
             var requestNewLaunch = new StartLaunchRequest
-                {
-                    Name = Configuration.ReportPortal.Launch.Name,
-                    StartTime = DateTime.UtcNow
-                };
+            {
+                Name = Configuration.ReportPortal.Launch.Name,
+                StartTime = DateTime.UtcNow
+            };
             if (Configuration.ReportPortal.Launch.DebugMode)
             {
                 requestNewLaunch.Mode = LaunchMode.Debug;
@@ -66,15 +72,19 @@ namespace ReportPortal.NUnit
             {
                 Bridge.Context.LaunchReporter = new LaunchReporter(Bridge.Service);
                 Bridge.Context.LaunchReporter.Start(requestNewLaunch);
-                if (AfterRunStarted != null) AfterRunStarted(this, new RunStartedEventArgs(Bridge.Service, requestNewLaunch, Bridge.Context.LaunchReporter));
+                if (AfterRunStarted != null)
+                    AfterRunStarted(this,
+                        new RunStartedEventArgs(Bridge.Service, requestNewLaunch, Bridge.Context.LaunchReporter));
             }
         }
 
         private Stack<TestReporter> _suiteIds;
 
         public delegate void SuiteStartedHandler(object sender, TestItemStartedEventArgs e);
+
         public event SuiteStartedHandler BeforeSuiteStarted;
         public event SuiteStartedHandler AfterSuiteStarted;
+
         public void SuiteStarted(TestName testName)
         {
             // skip the first suite
@@ -109,7 +119,8 @@ namespace ReportPortal.NUnit
 
                 if (AfterSuiteStarted != null)
                 {
-                    AfterSuiteStarted(this, new TestItemStartedEventArgs(Bridge.Service, requestNewSuite, _suiteIds.Peek()));
+                    AfterSuiteStarted(this,
+                        new TestItemStartedEventArgs(Bridge.Service, requestNewSuite, _suiteIds.Peek()));
                 }
             }
         }
@@ -117,8 +128,10 @@ namespace ReportPortal.NUnit
         private TestReporter _testId;
 
         public delegate void TestStartedHandler(object sender, TestItemStartedEventArgs e);
+
         public event TestStartedHandler BeforeTestStarted;
         public event TestStartedHandler AfterTestStarted;
+
         public void TestStarted(TestName testName)
         {
             if (Bridge.Context.LaunchReporter != null)
@@ -127,24 +140,26 @@ namespace ReportPortal.NUnit
                 var parentSuiteId = (_suiteIds.Count > 0) ? _suiteIds.Peek() : null;
 
                 var requestNewTest = new StartTestItemRequest
-                    {
-                        Name = testName.Name,
-                        StartTime = DateTime.UtcNow,
-                        Type = TestItemType.Step
-                    };
+                {
+                    Name = testName.Name,
+                    StartTime = DateTime.UtcNow,
+                    Type = TestItemType.Step
+                };
 
                 var eventArg = new TestItemStartedEventArgs(Bridge.Service, requestNewTest);
                 if (BeforeTestStarted != null) BeforeTestStarted(this, eventArg);
                 if (!eventArg.Canceled)
                 {
                     _testId = parentSuiteId.StartNewTestNode(requestNewTest);
-                    
-                    if (AfterTestStarted != null) AfterTestStarted(this, new TestItemStartedEventArgs(Bridge.Service, requestNewTest, _testId));
+
+                    if (AfterTestStarted != null)
+                        AfterTestStarted(this, new TestItemStartedEventArgs(Bridge.Service, requestNewTest, _testId));
                 }
             }
         }
 
         private readonly bool _reportConsole = Configuration.ReportPortal.LogConsoleOutput;
+
         public void TestOutput(TestOutput testOutput)
         {
             if (_reportConsole && _testId != null)
@@ -160,8 +175,10 @@ namespace ReportPortal.NUnit
         }
 
         public delegate void TestFinishedHandler(object sender, TestItemFinishedEventArgs e);
+
         public event TestFinishedHandler BeforeTestFinished;
         public event TestFinishedHandler AfterTestFinished;
+
         public void TestFinished(TestResult result)
         {
             if (result.Message != null && _testId != null)
@@ -203,18 +220,20 @@ namespace ReportPortal.NUnit
         }
 
         public delegate void SuiteFinishedHandler(object sender, TestItemFinishedEventArgs e);
+
         public event SuiteFinishedHandler BeforeSuiteFinished;
         public event SuiteFinishedHandler AfterSuiteFinished;
+
         public void SuiteFinished(TestResult result)
         {
             // finish the last suite in stack
             if (_suiteIds.Count != 0)
             {
                 var requestFinishSuite = new FinishTestItemRequest
-                    {
-                        EndTime = DateTime.UtcNow,
-                        Status = _statusMap[result.ResultState]
-                    };
+                {
+                    EndTime = DateTime.UtcNow,
+                    Status = _statusMap[result.ResultState]
+                };
                 var suiteId = _suiteIds.Pop();
                 var eventArg = new TestItemFinishedEventArgs(Bridge.Service, requestFinishSuite, result, suiteId);
                 if (BeforeSuiteFinished != null) BeforeSuiteFinished(this, eventArg);
@@ -222,14 +241,18 @@ namespace ReportPortal.NUnit
                 {
                     suiteId.Finish(requestFinishSuite);
 
-                    if (AfterSuiteFinished != null) AfterSuiteFinished(this, new TestItemFinishedEventArgs(Bridge.Service, requestFinishSuite, result, suiteId));
+                    if (AfterSuiteFinished != null)
+                        AfterSuiteFinished(this,
+                            new TestItemFinishedEventArgs(Bridge.Service, requestFinishSuite, result, suiteId));
                 }
             }
         }
 
         public delegate void RunFinishedHandler(object sender, RunFinishedEventArgs e);
+
         public event RunFinishedHandler BeforeRunFinished;
         public event RunFinishedHandler AfterRunFinished;
+
         public void RunFinished(TestResult result)
         {
             RunFinished();
@@ -249,20 +272,28 @@ namespace ReportPortal.NUnit
                     EndTime = DateTime.UtcNow
                 };
 
-                var eventArg = new RunFinishedEventArgs(Bridge.Service, requestFinishLaunch, Bridge.Context.LaunchReporter);
+                var eventArg = new RunFinishedEventArgs(Bridge.Service, requestFinishLaunch,
+                    Bridge.Context.LaunchReporter);
                 if (BeforeRunFinished != null) BeforeRunFinished(this, eventArg);
                 if (!eventArg.Canceled)
                 {
                     Bridge.Context.LaunchReporter.Finish(requestFinishLaunch);
-                    Bridge.Context.LaunchReporter.FinishTask.Wait();
+
+                    try
+                    {
+                        Bridge.Context.LaunchReporter.FinishTask.Wait(TimeSpan.FromMinutes(30));
+                    }
+                    catch (Exception exp)
+                    {
+                        Console.WriteLine(exp);
+                        throw;
+                    }
+                    
                     if (AfterRunFinished != null)
                     {
                         AfterRunFinished(this, new RunFinishedEventArgs(Bridge.Service, requestFinishLaunch, Bridge.Context.LaunchReporter));
                     }
                 }
-
-                _suiteIds = null;
-                Bridge.Context.LaunchReporter = null;
             }
         }
 
