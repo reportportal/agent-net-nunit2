@@ -3,7 +3,7 @@
   <metadata>
     <id>ReportPortal.NUnit2</id>
     <version>$version$</version>
-    <title>ReportPortal NUnit</title>
+    <title>ReportPortal NUnit2</title>
     <authors>Nikolay Borisenko</authors>
     <owners>Nikolay Borisenko</owners>
     <licenseUrl>https://raw.githubusercontent.com/reportportal/client-net/master/LICENSE</licenseUrl>
