@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>ReportPortal.NUnit</id>
+    <id>ReportPortal.NUnit2</id>
     <version>$version$</version>
     <title>ReportPortal NUnit</title>
     <authors>Nikolay Borisenko</authors>
@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/reportportal/agent-net-nunit2</projectUrl>
     <iconUrl>https://reportportal.github.io/img/rp_logo.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Report Portal NUnit agent</description>
+    <description>Report Portal NUnit2 agent</description>
     <copyright>Copyright 2016</copyright>
     <tags>reportportal testing</tags>
 

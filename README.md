@@ -3,7 +3,7 @@
 # Installation
 Install **ReportPortal.NUnit** NuGet package into your project with tests.
 
-[![NuGet version](https://badge.fury.io/nu/reportportal.nunit.svg)](https://badge.fury.io/nu/reportportal.nunit)
+[![NuGet version](https://badge.fury.io/nu/reportportal.nunit2.svg)](https://badge.fury.io/nu/reportportal.nunit2)
 > PS> Install-Package ReportPortal.NUnit -Version 1.0.67
 
 Note: Only ReportPortal.NUnit v1.\* is compatible with NUnit 2.6.4. If you use NUnit 3+ please follow [ReportPortal.NUnit3](https://github.com/reportportal/agent-net-nunit) guide.
@@ -19,7 +19,7 @@ Example of config file:
   </configSections>
   <reportPortal enabled="true" logConsoleOutput="true">
     <server url="https://rp.epam.com/api/v1/" project="default_project">
-      <authentication username="default" password="aa19555c-c9ce-42eb-bb11-87757225d535" />
+      <authentication username="default" password="45c00b4f-a893-4365-89be-8c1b89e30ffb" />
       <!-- <proxy server="host:port"/> -->
     </server>
     <launch name="NUnit Demo Launch" debugMode="true" tags="t1,t2" />
